@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 #
-# claude_code.sh - Mini AI Agent with Skills (Shell版本)
+# claude_code.sh - Nano Claude Code with Skills (Shell版本)
 # 使用 OpenAI API (gpt-4o)
 #
 # 核心功能:
 # - Skills 机制: 从 SKILL.md 加载领域知识
-# - Subagents: 任务分解
 # - Todo 管理: 跟踪多步骤任务
 # - 工具调用: bash, read_file, write_file, edit_file
 
@@ -22,7 +21,7 @@ TODO_FILE="./agent_todos.json"
 CONTINUE_SESSION=false
 
 # OpenAI 配置
-NVIDIA_API_KEY="${NVIDIA_API_KEY:-}"
+OPENAI_API_KEY="${OPENAI_API_KEY:-}"
 OPENAI_BASE_URL="${OPENAI_BASE_URL:-https://api.openai.com/v1}"
 MODEL="${MODEL:-gpt-4o}"
 
@@ -123,8 +122,8 @@ check_dependencies() {
         exit 1
     fi
     
-    if [[ -z "$NVIDIA_API_KEY" ]]; then
-        log_error "请设置 NVIDIA_API_KEY 环境变量"
+    if [[ -z "$OPENAI_API_KEY" ]]; then
+        log_error "请设置 OPENAI_API_KEY 环境变量"
         exit 1
     fi
 }
@@ -467,7 +466,7 @@ JQFILTER
     local response
     response=$(curl -s -X POST "$OPENAI_BASE_URL/chat/completions" \
         -H "Content-Type: application/json" \
-        -H "Authorization: Bearer $NVIDIA_API_KEY" \
+        -H "Authorization: Bearer $OPENAI_API_KEY" \
         -d "$request_body")
     
     # 检查错误
@@ -728,7 +727,7 @@ Rules:
 main() {
     check_dependencies
     
-    log_info "Mini AI Agent v4 (Shell + OpenAI) - $WORKDIR"
+    log_info "Nano Claude Code v4 (Shell + OpenAI) - $WORKDIR"
     log_info "Base URL: $OPENAI_BASE_URL"
     log_info "Model: $MODEL"
     
